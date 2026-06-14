@@ -3,76 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Target Rush</title>
+    <title>Target Rush - Aim Trainer</title>
+
+    <meta property="og:title" content="Target Rush">
+    <meta property="og:description" content="Retro Aim Training Range - Hit as many targets as possible!">
+    <meta property="og:image" content="./assets/menu-bg.jpg">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta name="twitter:card" content="summary_large_image">
+
     <link rel="stylesheet" href="style.css">
 </head>
-<body onclick="initMusic()">
+<body>
 
-<div id="menu">
-    <h1>TARGET RUSH</h1>
-    <p class="subtitle">🔫 RETRO AIM TRAINING RANGE 🔫</p>
-    <p class="description">Hit as many targets as possible before time runs out.</p>
+    <div id="menu-screen" class="screen">
+        <div class="menu-container">
+            <h1 class="game-title">TARGET RUSH</h1>
+            <p class="game-subtitle">🕹️ RETRO AIM TRAINING RANGE 🕹️</p>
+            <p class="game-instructions">Hit as many targets as possible before time runs out.</p>
 
-    <div class="selection-container">
-        <div class="selection-box">
-            <h3>SELECT TARGET</h3>
-            <div class="target-grid">
-                <img src="assets/ronaldo.png" alt="Ronaldo" class="target-tile active" onclick="selectTarget('ronaldo', this)">
-                <img src="assets/doge.png" alt="Doge" class="target-tile" onclick="selectTarget('doge', this)">
-                <img src="assets/diddy.png" alt="Diddy" class="target-tile" onclick="selectTarget('diddy', this)">
-                <img src="assets/meme.png" alt="Meme" class="target-tile" onclick="selectTarget('meme', this)">
-                <img src="assets/zuck.png" alt="Zuck" class="target-tile" onclick="selectTarget('zuck', this)">
-                <img src="assets/epstein.png" alt="Epstein" class="target-tile" onclick="selectTarget('epstein', this)">
+            <div class="selection-box">
+                <div class="select-section">
+                    <h3>SELECT TARGET</h3>
+                    <div class="grid targets-grid">
+                        <div class="grid-item target-item active" data-target="ronaldo">
+                            <img src="assets/ronaldo.png" alt="Ronaldo">
+                        </div>
+                        <div class="grid-item target-item" data-target="doge">
+                            <img src="assets/doge.png" alt="Doge">
+                        </div>
+                        <div class="grid-item target-item" data-target="diddy">
+                            <img src="assets/diddy.png" alt="Diddy">
+                        </div>
+                        <div class="grid-item target-item" data-target="zuck">
+                            <img src="assets/zuck.png" alt="Zuck">
+                        </div>
+                        <div class="grid-item target-item" data-target="meme">
+                            <img src="assets/meme.png" alt="Meme">
+                        </div>
+                        <div class="grid-item target-item" data-target="epstein">
+                            <img src="assets/epstein.png" alt="Epstein">
+                        </div>
+                        <div class="grid-item target-item custom-upload" id="custom-target-btn">
+                            <span>+ CUSTOM</span>
+                            <input type="file" id="custom-target-input" accept="image/*" style="display: none;">
+                        </div>
+                    </div>
+                </div>
 
-                <label class="target-tile upload-tile" id="uploadLabel">
-                    <span id="uploadText">+ CUSTOM</span>
-                    <input type="file" id="imageUploader" accept="image/*" style="display: none;">
-                </label>
+                <div class="select-section">
+                    <h3>SELECT MODE</h3>
+                    <div class="modes-list">
+                        <button class="mode-btn active" data-mode="rookie">ROOKIE</button>
+                        <button class="mode-btn" data-mode="ranger">RANGER</button>
+                        <button class="mode-btn" data-mode="elite">ELITE</button>
+                        <button class="mode-btn" data-mode="god">GOD MODE</button>
+                    </div>
+                </div>
+            </div>
+
+            <button id="start-btn" class="action-btn">BEGIN TRAINING</button>
+        </div>
+    </div>
+
+    <div id="game-screen" class="screen hidden">
+        <div id="ui-bar">
+            <div class="ui-element">SCORE: <span id="score-val">0</span></div>
+            <div class="ui-element">TIME: <span id="time-val">30</span>s</div>
+            <div class="ui-element">ACCURACY: <span id="accuracy-val">100</span>%</div>
+        </div>
+        <div id="game-container"></div>
+    </div>
+
+    <div id="gameover-screen" class="screen hidden">
+        <div class="menu-container gameover-container">
+            <h1 class="gameover-title">TRAINING COMPLETE</h1>
+            
+            <div class="stats-display">
+                <p>FINAL SCORE: <span id="final-score">0</span></p>
+                <p>TARGETS HIT: <span id="final-hits">0</span></p>
+                <p>SHOTS FIRED: <span id="final-shots">0</span></p>
+                <p>ACCURACY: <span id="final-accuracy">0</span>%</p>
+            </div>
+
+            <div class="gameover-actions">
+                <button id="retry-btn" class="action-btn">RETRY</button>
+                <button id="main-menu-btn" class="action-btn secondary">MAIN MENU</button>
             </div>
         </div>
-
-        <div class="selection-box">
-            <h3>SELECT MODE</h3>
-            <div class="mode-column">
-                <button class="mode-btn active" onclick="selectMode('rookie', this)">ROOKIE</button>
-                <button class="mode-btn" onclick="selectMode('ranger', this)">RANGER</button>
-                <button class="mode-btn" onclick="selectMode('elite', this)">ELITE</button>
-                <button class="mode-btn" onclick="selectMode('god', this)">GOD MODE</button>
-            </div>
-        </div>
     </div>
 
-    <br><br>
-    <button id="startBtn">BEGIN TRAINING</button>
-</div>
+    <audio id="bg-music" src="assets/music.mp3" loop></audio>
 
-<div id="game" style="display:none;">
-    <div id="topBar">
-        <span>Score: <span id="score">0</span></span>
-        <button id="quitBtn" onclick="quitGame()">QUIT</button>
-        <span>Time: <span id="timer">30</span></span>
-    </div>
-    <div id="gameArea">
-        <img id="target" src="" alt="target">
-    </div>
-</div>
-
-<div id="gameOver" style="display:none;">
-    <h1>GAME OVER</h1>
-    <p class="subtitle">🏆 Training Results 🏆</p>
-
-    <div class="stats-box">
-        <p>Final Score: <span id="finalScore" style="color: #ffd24d;">0</span></p>
-        <p>Rank: <span id="finalRank" style="color: #f8e7a1;">Rookie</span></p>
-    </div>
-
-    <button id="restartBtn">TRY AGAIN</button>
-</div>
-
-<audio id="music" loop>
-    <source src="assets/music.mp3" type="audio/mpeg">
-</audio>
-
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
