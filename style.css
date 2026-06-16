@@ -8,8 +8,6 @@ html, body {
     color: white;
     text-align: center;
     overflow-x: hidden;
-
-    /* Matches your clean menu-bg.jpg filename perfectly */
     background-image: url('assets/menu-bg.jpg');
     background-position: center;
     background-repeat: no-repeat;
@@ -17,7 +15,6 @@ html, body {
     background-attachment: fixed;
 }
 
-/* Dark tint filter so you can see your text and tiles over the background */
 #menu, #gameOver {
     min-height: 100vh;
     box-sizing: border-box;
@@ -65,8 +62,10 @@ h3 {
     justify-content: center;
     gap: 30px;
     margin: 0 auto;
-    max-width: 960px;
+    max-width: 1200px;
     align-items: stretch;
+    flex-wrap: wrap;
+    padding: 0 20px;
 }
 
 .selection-box {
@@ -76,18 +75,21 @@ h3 {
     padding: 30px 20px;
     border-radius: 12px;
     flex: 1;
+    min-width: 220px;
 }
 
+/* ===================== TARGET GRID ===================== */
 .target-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 12px;
     justify-items: center;
 }
 
 .target-tile {
-    width: 85px;
-    height: 85px;
+    width: 100%;
+    aspect-ratio: 1;
+    max-width: 90px;
     border: 4px solid #444;
     background: #111;
     cursor: pointer;
@@ -120,6 +122,7 @@ h3 {
     background-repeat: no-repeat;
 }
 
+/* ===================== MODE COLUMN ===================== */
 .mode-column {
     display: flex;
     flex-direction: column;
@@ -153,6 +156,114 @@ button:hover, .mode-btn:hover {
     text-shadow: 0px 0px 5px rgba(255, 210, 77, 0.5);
 }
 
+/* ===================== CROSSHAIR PICKER ===================== */
+.crosshair-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    justify-items: center;
+}
+
+.crosshair-tile {
+    width: 60px;
+    height: 60px;
+    border: 3px solid #444;
+    background: #111;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.1s, border-color 0.1s;
+}
+
+.crosshair-tile:hover {
+    transform: scale(1.08);
+    border-color: #f8e7a1;
+}
+
+.crosshair-tile.active {
+    border-color: #ffd24d;
+    box-shadow: 0px 0px 10px rgba(255, 210, 77, 0.6);
+    background: rgba(255, 210, 77, 0.08);
+}
+
+/* Color swatches */
+.color-row {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.color-swatch {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 3px solid #444;
+    cursor: pointer;
+    transition: transform 0.1s, border-color 0.1s;
+}
+
+.color-swatch:hover {
+    transform: scale(1.15);
+}
+
+.color-swatch.active {
+    border-color: white;
+    box-shadow: 0 0 8px rgba(255,255,255,0.5);
+    transform: scale(1.2);
+}
+
+/* ===================== LEADERBOARD ===================== */
+#leaderboardPanel {
+    background: rgba(22, 28, 42, 0.9);
+    border: 4px solid #ffd24d;
+    border-radius: 12px;
+    max-width: 600px;
+    margin: 30px auto 0 auto;
+    padding: 20px 30px;
+    box-shadow: 0px 0px 20px rgba(255, 210, 77, 0.2);
+}
+
+#leaderboardPanelOver {
+    background: rgba(22, 28, 42, 0.9);
+    border: 4px solid #ffd24d;
+    border-radius: 12px;
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 16px 24px;
+}
+
+.lb-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 6px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    font-size: 11px;
+}
+
+.lb-row:last-child {
+    border-bottom: none;
+}
+
+.lb-medal {
+    font-size: 18px;
+    min-width: 24px;
+}
+
+.lb-score {
+    color: #ffd24d;
+    font-size: 13px;
+    min-width: 70px;
+}
+
+.lb-meta {
+    color: #aaa;
+    font-size: 9px;
+}
+
+/* ===================== START BUTTON ===================== */
 #startBtn {
     margin-top: 30px;
     font-size: 22px;
@@ -171,13 +282,12 @@ button:hover, .mode-btn:hover {
     box-shadow: 0px 4px 0px #b33939;
 }
 
-/* 🕹️ POLISHED MAIN ARENA LAYOUT */
+/* ===================== GAME HUD ===================== */
 #game {
     min-height: 100vh;
     background: rgba(0, 0, 0, 0.25);
 }
 
-/* Styled HUD Bar */
 #topBar {
     display: flex;
     justify-content: space-around;
@@ -191,16 +301,15 @@ button:hover, .mode-btn:hover {
 }
 
 #score {
-    color: #2ed573; /* Neon green score tracker */
+    color: #2ed573;
     text-shadow: 0 0 8px rgba(46, 213, 115, 0.4);
 }
 
 #timer {
-    color: #ff4757; /* Vivid red countdown timer */
+    color: #ff4757;
     text-shadow: 0 0 8px rgba(255, 71, 87, 0.4);
 }
 
-/* 🛑 HUD QUIT BUTTON STYLE */
 #quitBtn {
     font-size: 11px;
     padding: 8px 18px;
@@ -218,7 +327,7 @@ button:hover, .mode-btn:hover {
     transform: scale(1.05);
 }
 
-/* The Playing Arena Box */
+/* ===================== GAME ARENA ===================== */
 #gameArea {
     width: 90%;
     height: 74vh;
@@ -232,10 +341,10 @@ button:hover, .mode-btn:hover {
     box-shadow:
         inset 0px 0px 50px rgba(0,0,0,0.95),
         0px 0px 25px rgba(255, 255, 255, 0.15);
-    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M14 0h4v6h-4zM14 26h4v6h-4zM0 14h6v4H0zM26 14h6v4h-6z' fill='%23ff4757'/%3E%3Ccircle cx='16' cy='16' r='2' fill='%23ff4757'/%3E%3C/svg%3E") 16 16, crosshair;
+    /* cursor is set dynamically by JS based on crosshair selection */
+    cursor: crosshair;
 }
 
-/* 🎯 THE TARGET DESIGN UPDATES */
 #target {
     position: absolute;
     user-select: none;
@@ -253,6 +362,7 @@ button:hover, .mode-btn:hover {
     transform: scale(0.9);
 }
 
+/* ===================== GAME OVER ===================== */
 .stats-box {
     background: rgba(16, 20, 30, 0.9);
     border: 4px solid white;
@@ -284,4 +394,25 @@ button:hover, .mode-btn:hover {
     background: #ff6b81;
     transform: translateY(2px);
     box-shadow: 0px 4px 0px #b33939;
+}
+#countdown-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 120px;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    color: #FFD700; /* Gold retro look */
+    text-shadow: 0px 8px 0px #b33939;
+    z-index: 1000;
+    pointer-events: none;
+    animation: countPop 1s ease-in-out infinite;
+}
+
+@keyframes countPop {
+    0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+    20% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+    80% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
 }
