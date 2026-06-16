@@ -40,20 +40,66 @@
                 <button class="mode-btn" onclick="selectMode('god', this)">GOD MODE</button>
             </div>
         </div>
+
+        <!-- NEW: Crosshair Picker -->
+        <div class="selection-box">
+            <h3>CROSSHAIR</h3>
+            <div class="crosshair-grid">
+                <div class="crosshair-tile active" onclick="selectCrosshair('default', this)" title="Classic Cross">
+                    <svg viewBox="0 0 32 32" width="36" height="36"><path d="M14 0h4v6h-4zM14 26h4v6h-4zM0 14h6v4H0zM26 14h6v4h-6z" fill="#ff4757"/><circle cx="16" cy="16" r="2" fill="#ff4757"/></svg>
+                </div>
+                <div class="crosshair-tile" onclick="selectCrosshair('dot', this)" title="Dot">
+                    <svg viewBox="0 0 32 32" width="36" height="36"><circle cx="16" cy="16" r="4" fill="#ff4757"/></svg>
+                </div>
+                <div class="crosshair-tile" onclick="selectCrosshair('circle', this)" title="Circle">
+                    <svg viewBox="0 0 32 32" width="36" height="36"><circle cx="16" cy="16" r="10" fill="none" stroke="#ff4757" stroke-width="2.5"/><circle cx="16" cy="16" r="2" fill="#ff4757"/></svg>
+                </div>
+                <div class="crosshair-tile" onclick="selectCrosshair('cross', this)" title="Thin Cross">
+                    <svg viewBox="0 0 32 32" width="36" height="36"><line x1="16" y1="2" x2="16" y2="30" stroke="#ff4757" stroke-width="2"/><line x1="2" y1="16" x2="30" y2="16" stroke="#ff4757" stroke-width="2"/></svg>
+                </div>
+                <div class="crosshair-tile" onclick="selectCrosshair('gap', this)" title="Gap Cross">
+                    <svg viewBox="0 0 32 32" width="36" height="36"><line x1="16" y1="2" x2="16" y2="11" stroke="#ff4757" stroke-width="2.5"/><line x1="16" y1="21" x2="16" y2="30" stroke="#ff4757" stroke-width="2.5"/><line x1="2" y1="16" x2="11" y2="16" stroke="#ff4757" stroke-width="2.5"/><line x1="21" y1="16" x2="30" y2="16" stroke="#ff4757" stroke-width="2.5"/><circle cx="16" cy="16" r="2" fill="#ff4757"/></svg>
+                </div>
+                <div class="crosshair-tile" onclick="selectCrosshair('x', this)" title="X Shape">
+                    <svg viewBox="0 0 32 32" width="36" height="36"><line x1="4" y1="4" x2="28" y2="28" stroke="#ff4757" stroke-width="2.5"/><line x1="28" y1="4" x2="4" y2="28" stroke="#ff4757" stroke-width="2.5"/></svg>
+                </div>
+            </div>
+
+            <!-- Crosshair Color Picker -->
+            <div style="margin-top: 16px;">
+                <p style="font-size:9px; color:#aaa; margin-bottom:8px;">COLOR</p>
+                <div class="color-row">
+                    <div class="color-swatch active" style="background:#ff4757;" onclick="setCrosshairColor('#ff4757', this)"></div>
+                    <div class="color-swatch" style="background:#2ed573;" onclick="setCrosshairColor('#2ed573', this)"></div>
+                    <div class="color-swatch" style="background:#ffd24d;" onclick="setCrosshairColor('#ffd24d', this)"></div>
+                    <div class="color-swatch" style="background:#ffffff;" onclick="setCrosshairColor('#ffffff', this)"></div>
+                    <div class="color-swatch" style="background:#00d2ff;" onclick="setCrosshairColor('#00d2ff', this)"></div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <br><br>
+    <!-- Leaderboard -->
+    <div id="leaderboardPanel">
+        <h3>🏆 TOP SCORES</h3>
+        <div id="leaderboardList"></div>
+    </div>
+
+    <br>
     <button id="startBtn">BEGIN TRAINING</button>
 </div>
 
 <div id="game" style="display:none;">
     <div id="topBar">
-        <span>Score: <span id="score">0</span></span>
-        <button id="quitBtn" onclick="quitGame()">QUIT</button>
-        <span>Time: <span id="timer">30</span></span>
-    </div>
+    <span>Score: <span id="score">0</span></span>
+    <button id="quitBtn" onclick="quitGame()">QUIT</button>
+    <button id="musicBtn" onclick="toggleMusic()">🔊 MUSIC</button>
+    <span>Time: <span id="timer">30</span></span>
+</div>
     <div id="gameArea">
         <img id="target" src="" alt="target">
+        <!-- Custom crosshair rendered here -->
+        <svg id="customCrosshair" style="position:fixed;top:0;left:0;pointer-events:none;z-index:9998;display:none;" width="32" height="32"></svg>
     </div>
 </div>
 
@@ -64,6 +110,12 @@
     <div class="stats-box">
         <p>Final Score: <span id="finalScore" style="color: #ffd24d;">0</span></p>
         <p>Rank: <span id="finalRank" style="color: #f8e7a1;">Rookie</span></p>
+    </div>
+
+    <!-- Leaderboard on game over screen -->
+    <div id="leaderboardPanelOver">
+        <h3 style="color:#ffd24d; font-size:14px; margin-top:25px;">🏆 TOP SCORES</h3>
+        <div id="leaderboardListOver"></div>
     </div>
 
     <button id="restartBtn">TRY AGAIN</button>
